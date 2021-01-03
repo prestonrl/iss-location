@@ -126,8 +126,23 @@ var loadISS = function (iss) {
     lonEl.textContent = "Longitude: " + iss.longitude + "°";
     lonEl.classList = "list-group-item";
 
+    var altEl = document.createElement('span');
+    altEl.textContent = "Altitude: " + iss.altitude;
+    altEl.classList = "list-group-item";
+
+    var velEl = document.createElement('span');
+    velEl.textContent = "Velocity: " + iss.velocity;
+    velEl.classList = "list-group-item";
+    
+    var visEl = document.createElement('span');
+    visEl.textContent = "Visibility: " + iss.visibility;
+    visEl.classList = "list-group-item";
+
     issDisplayEl.appendChild(latEl);
     issDisplayEl.appendChild(lonEl);
+    issDisplayEl.appendChild(altEl);
+    issDisplayEl.appendChild(velEl);
+    issDisplayEl.appendChild(visEl);
 };
 
 var previousSearchHandler = function (event) {
