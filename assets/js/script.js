@@ -12,7 +12,6 @@ var currentLocationEl = document.querySelector('#current-location');
 var issLocationEl = document.querySelector('#iss-location');
 var cities = [];
 var apiKey = "4e58e97fdd4f6e5374486a7e4a85fd81";
-document.querySelector('#city').style.height = "35px";
 var issAlt = 0
 var issLon = 0
 var issLat = 0
@@ -160,31 +159,13 @@ var loadDistance = function () {
     DistLocationEl.classList.add('border', 'p-2');
     console.log(iss);
 
-    var latEl = document.createElement('span');
-    latEl.textContent = "Latitude: " + iss.latitude + "°";
-    latEl.classList = "list-group-item";
+    var distEl = document.createElement('span');
+    distEl.textContent = "Miles ";
+    distEl.classList = "list-group-item";
 
-    var lonEl = document.createElement('span');
-    lonEl.textContent = "Longitude: " + iss.longitude + "°";
-    lonEl.classList = "list-group-item";
-
-    var altEl = document.createElement('span');
-    altEl.textContent = "Altitude: " + iss.altitude;
-    altEl.classList = "list-group-item";
-
-    var velEl = document.createElement('span');
-    velEl.textContent = "Velocity: " + iss.velocity;
-    velEl.classList = "list-group-item";
-    
-    var visEl = document.createElement('span');
-    visEl.textContent = "Visibility: " + iss.visibility;
-    visEl.classList = "list-group-item";
 
     issDisplayEl.appendChild(latEl);
-    issDisplayEl.appendChild(lonEl);
-    issDisplayEl.appendChild(altEl);
-    issDisplayEl.appendChild(velEl);
-    issDisplayEl.appendChild(visEl);
+ 
 };
 
 var previousSearchHandler = function (event) {
@@ -274,7 +255,7 @@ var calcDistance =  async function calculateDistance() {
   };
   
 
-  var calcDistance = function () {
+var calcDistance = function () {
     getISSinfo();
     var dis = distance(enteredLat, enteredLon, issLat, issLon);
     var longSide = getLongestSide(dis, issAlt);

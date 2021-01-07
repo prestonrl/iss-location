@@ -7,9 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/style.css" />
+ 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/solid.min.css" integrity="sha512-SazV6tF6Ko4GxhyIZpKoXiKYndqzh7+cqxl9HDH7DGSpjkCN3QLqTAlhJHJnKxu3/2rfCsltzwFC4CmxZE1hPg==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
     <title>ISS Proximity</title>
     </head>
     
@@ -30,13 +31,13 @@
         <main class="container is-max-deskto mt-6 pt-6">
             <div class="notification is-white">
                 <div class="columns is-centered">
-                    <div class="column is-half control has-icons-left has-icons-right field">
-                        <h3 class="is-white">Search for your City:</h3>
+                    <div class="column is-half control has-icons-right field">
+                        <h3 class="is-white subtitle is-4">Search for your City:</h3>
                         <form id="user-form" class="card-body">
                             <div class="field is-grouped">
-                            <input type="text" autofocus="true" class="input" id="city" />
+                            <input type="text" autofocus="true" class="input searchbar1" id="city"/> 
                             <button type="submit" class="button *r">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="fas fa-search" fill="currentColor"
+                                <svg width="1rem" height="1rem" class="fas fa-search" fill="currentColor"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
                                         d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
@@ -60,6 +61,11 @@
                         <h2 class="col-12" id="iss-title"></h2>
                         <div class="d-flex row" id="iss"></div>
                     </div>
+                    <div class="row" id="dist-location">
+                        <h2 class="col-12" id="dist-title"></h2>
+                        <div class="d-flex row" id="dist"></div>
+                    </div>
+
                 </div>
             </div>
         </main>
