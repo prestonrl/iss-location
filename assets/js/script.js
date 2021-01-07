@@ -15,7 +15,7 @@ var issLon = 0;
 var issLat = 0;
 var enteredLat = 0;
 var enteredLon = 0;
-document.querySelector('#city').style.height = "35px";
+d
 
 
 var searchedCity = function (event) {
