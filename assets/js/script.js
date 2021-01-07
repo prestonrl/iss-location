@@ -10,6 +10,11 @@ var currentLocationEl = document.querySelector('#current-location');
 var issLocationEl = document.querySelector('#iss-location');
 var cities = [];
 var apiKey = "4e58e97fdd4f6e5374486a7e4a85fd81";
+var issAlt = 0;
+var issLon = 0;
+var issLat = 0;
+var enteredLat = 0;
+var enteredLon = 0;
 document.querySelector('#city').style.height = "35px";
 
 
@@ -78,18 +83,18 @@ var loadLocation = function (weather, currentCity) {
     cityEl.textContent = currentCity;
     currentLocationEl.classList.add('border', 'p-2');
 
-    var latitude = weather.coord.lat;
-    var longitude = weather.coord.lon;
+    enteredLat = weather.coord.lat;
+    enteredLon = weather.coord.lon;
     console.log(weather);
 
 
 
     var latEl = document.createElement('span');
-    latEl.textContent = "Latitude: " + latitude + "°";
+    latEl.textContent = "Latitude: " + enteredLat + "°";
     latEl.classList = "list-group-item";
 
     var lonEl = document.createElement('span');
-    lonEl.textContent = "Longitude: " + longitude + "°";
+    lonEl.textContent = "Longitude: " + enteredLon + "°";
     lonEl.classList = "list-group-item";
 
     locationDisplayEl.appendChild(latEl);
@@ -118,16 +123,20 @@ var loadISS = function (iss) {
     issLocationEl.classList.add('border', 'p-2');
     console.log(iss);
 
+    issLat = iss.latitude;
+    issLon = iss.longitude;
+    issAlt = iss.altitude;
+
     var latEl = document.createElement('span');
-    latEl.textContent = "Latitude: " + iss.latitude + "°";
+    latEl.textContent = "Latitude: " + issLat + "°";
     latEl.classList = "list-group-item";
 
     var lonEl = document.createElement('span');
-    lonEl.textContent = "Longitude: " + iss.longitude + "°";
+    lonEl.textContent = "Longitude: " + issLon + "°";
     lonEl.classList = "list-group-item";
 
     var altEl = document.createElement('span');
-    altEl.textContent = "Altitude: " + iss.altitude;
+    altEl.textContent = "Altitude: " + issAlt;
     altEl.classList = "list-group-item";
 
     var velEl = document.createElement('span');
@@ -142,6 +151,44 @@ var loadISS = function (iss) {
     issDisplayEl.appendChild(lonEl);
     issDisplayEl.appendChild(altEl);
     issDisplayEl.appendChild(velEl);
+    issDisplayEl.appendChild(visEl);
+
+    calcDistance();
+};
+
+function getLongestSide(sideA, sideB) {
+    return Math.sqrt(sideA * sideA + sideB * sideB)
+}
+
+function distance(lat1, lon1, lat2, lon2) {
+    var p = 0.017453292519943295;    // Math.PI / 180
+    var c = Math.cos;
+    var a = 0.5 - c((lat2 - lat1) * p) / 2 +
+        c(lat1 * p) * c(lat2 * p) *
+        (1 - c((lon2 - lon1) * p)) / 2;
+
+    return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+}
+
+var calcDistance = function () {
+    console.log(issLat);
+    console.log(issLon);
+    console.log(issAlt);
+    console.log(enteredLat);
+    console.log(enteredLon);
+
+    var dis = distance(enteredLat, enteredLon, issLat, issLon);
+    console.log(dis);
+
+    var longSide = getLongestSide(dis, issAlt);
+    //divide by 1.609 to convert to miles
+    var longSideAns = Math.round(longSide / 1.609);;
+    console.log(issAlt)
+    console.log("The ISS is approximately " + longSideAns + " miles away")
+
+    var visEl = document.createElement('span');
+    visEl.textContent = "The ISS is approximately " + longSideAns + " miles away";
+    visEl.classList = "list-group-item";
     issDisplayEl.appendChild(visEl);
 };
 
