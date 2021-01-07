@@ -81,21 +81,21 @@ var getLocation = function (city) {
 var loadLocation = function (weather, currentCity) {
     locationDisplayEl.textContent = "";
     cityEl.textContent = currentCity;
-    currentLocationEl.classList.add('border', 'p-2');
+    currentLocationEl.classList.add('border', 'p-2','is-size-3');
 
-    enteredLat = weather.coord.lat;
-    enteredLon = weather.coord.lon;
+    enteredLat = (Math.round(weather.coord.lat * 100) / 100).toFixed(2);
+    enteredLon = (Math.round(weather.coord.lon * 100) / 100).toFixed(2);
     console.log(weather);
 
 
 
     var latEl = document.createElement('span');
     latEl.textContent = "Latitude: " + enteredLat + "°";
-    latEl.classList = "list-group-item";
+    latEl.classList = "label";
 
     var lonEl = document.createElement('span');
     lonEl.textContent = "Longitude: " + enteredLon + "°";
-    lonEl.classList = "list-group-item";
+    lonEl.classList = "label";
 
     locationDisplayEl.appendChild(latEl);
     locationDisplayEl.appendChild(lonEl);
@@ -120,32 +120,32 @@ var getISS = function () {
 var loadISS = function (iss) {
     issTitleEl.textContent = "ISS Location:"
     issDisplayEl.textContent = "";
-    issLocationEl.classList.add('border', 'p-2');
+    issLocationEl.classList.add('border', 'p-2', 'is-size-3');
     console.log(iss);
 
-    issLat = iss.latitude;
-    issLon = iss.longitude;
-    issAlt = iss.altitude;
+    issLat = (Math.round(iss.latitude * 100) / 100).toFixed(2);
+    issLon = (Math.round(iss.longitude * 100) / 100).toFixed(2);
+    issAlt = (Math.round(iss.altitude * 100) / 100).toFixed(2);
 
     var latEl = document.createElement('span');
     latEl.textContent = "Latitude: " + issLat + "°";
-    latEl.classList = "list-group-item";
+    latEl.classList = "label";
 
     var lonEl = document.createElement('span');
     lonEl.textContent = "Longitude: " + issLon + "°";
-    lonEl.classList = "list-group-item";
+    lonEl.classList = "label";
 
     var altEl = document.createElement('span');
-    altEl.textContent = "Altitude: " + issAlt;
-    altEl.classList = "list-group-item";
+    altEl.textContent = "Altitude: " + (Math.round((issAlt/ 1.609) * 100) / 100).toFixed(2) + " mi";
+    altEl.classList = "label";
 
     var velEl = document.createElement('span');
-    velEl.textContent = "Velocity: " + iss.velocity;
-    velEl.classList = "list-group-item";
+    velEl.textContent = "Velocity: " + (Math.round((iss.velocity/ 1.609) * 100) / 100).toFixed(2) + " MPH";
+    velEl.classList = "label";
     
     var visEl = document.createElement('span');
     visEl.textContent = "Visibility: " + iss.visibility;
-    visEl.classList = "list-group-item";
+    visEl.classList = "label";
 
     issDisplayEl.appendChild(latEl);
     issDisplayEl.appendChild(lonEl);
@@ -155,6 +155,12 @@ var loadISS = function (iss) {
 
     calcDistance();
 };
+
+function convertLatLong(latitude, longitude) {
+    fetch(`http://api.positionstack.com/v1/reverse?access_key=7ea1c67aa559e0d3ca2f78be3f4734f3&query=${latitude},${longitude}`)
+    .then(response => response.json())
+    .then(data => console.log(data.data[0].label)); //currently sent up to label the address of location. 
+}
 
 function getLongestSide(sideA, sideB) {
     return Math.sqrt(sideA * sideA + sideB * sideB)
@@ -188,8 +194,9 @@ var calcDistance = function () {
 
     var visEl = document.createElement('span');
     visEl.textContent = "The ISS is approximately " + longSideAns + " miles away";
-    visEl.classList = "list-group-item";
+    visEl.classList = "label";
     issDisplayEl.appendChild(visEl);
+
 };
 
 var previousSearchHandler = function (event) {
