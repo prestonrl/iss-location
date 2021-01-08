@@ -4,10 +4,13 @@ var pastCityBtnEl = document.querySelector('#previous-cities')
 var cityEl = document.querySelector('#current-city');
 var locationDisplayEl = document.querySelector('#location-container');
 var issDisplayEl = document.querySelector('#iss');
+var distDisplayEl = document.querySelector('#dist');
 var issTitleEl = document.querySelector('#iss-title');
+var distTitleEl = document.querySelector('#dist-title');
 var previousCityEl = document.querySelector('#previous-cities');
 var currentLocationEl = document.querySelector('#current-location');
 var issLocationEl = document.querySelector('#iss-location');
+var distLocationEl = document.querySelector('#dist-location');
 var cities = [];
 var apiKey = "4e58e97fdd4f6e5374486a7e4a85fd81";
 var issAlt = 0;
@@ -15,7 +18,6 @@ var issLon = 0;
 var issLat = 0;
 var enteredLat = 0;
 var enteredLon = 0;
-
 
 
 var searchedCity = function (event) {
@@ -120,7 +122,7 @@ var getISS = function () {
 var loadISS = function (iss) {
     issTitleEl.textContent = "ISS Location:"
     issDisplayEl.textContent = "";
-    issLocationEl.classList.add('border', 'p-2', 'is-size-3');
+    issLocationEl.classList.add('border', 'is-size-3');
     console.log(iss);
 
     issLat = (Math.round(iss.latitude * 100) / 100).toFixed(2);
@@ -154,12 +156,29 @@ var loadISS = function (iss) {
     issDisplayEl.appendChild(visEl);
 
     calcDistance();
+    convertLatLong(issLat, issLon);
 };
 
 function convertLatLong(latitude, longitude) {
-    fetch(`http://api.positionstack.com/v1/reverse?access_key=7ea1c67aa559e0d3ca2f78be3f4734f3&query=${latitude},${longitude}`)
-    .then(response => response.json())
-    .then(data => console.log(data.data[0].label)); //currently sent up to label the address of location. 
+    var apiSite = `http://api.positionstack.com/v1/reverse?access_key=7ea1c67aa559e0d3ca2f78be3f4734f3&query=${latitude},${longitude}`;
+    fetch(apiSite)
+        .then(function (response) {
+            if (response.ok) {
+                response.json().then(function (data) {
+                    var isAbove = data.data[0].label;
+
+                    var visEl = document.createElement('span');
+                    visEl.textContent = "The ISS is above " + isAbove;
+                    visEl.classList = "label";
+                    distDisplayEl.appendChild(visEl);
+                });
+            }
+            else {
+                alert("Error: " + response.statusText);
+                return;
+            }
+        });
+
 }
 
 function getLongestSide(sideA, sideB) {
@@ -186,17 +205,23 @@ var calcDistance = function () {
     var dis = distance(enteredLat, enteredLon, issLat, issLon);
     console.log(dis);
 
+   
+
     var longSide = getLongestSide(dis, issAlt);
     //divide by 1.609 to convert to miles
     var longSideAns = Math.round(longSide / 1.609);;
     console.log(issAlt)
     console.log("The ISS is approximately " + longSideAns + " miles away")
 
+    distTitleEl.textContent = "Distance:"
+    distDisplayEl.textContent = "";
+    distLocationEl.classList.add('border', 'is-size-3');
+
     var visEl = document.createElement('span');
     visEl.textContent = "The ISS is approximately " + longSideAns + " miles away";
     visEl.classList = "label";
-    issDisplayEl.appendChild(visEl);
-
+    distDisplayEl.appendChild(visEl);
+    
 };
 
 var previousSearchHandler = function (event) {
