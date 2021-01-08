@@ -83,11 +83,11 @@ var getLocation = function (city) {
 var loadLocation = function (weather, currentCity) {
     locationDisplayEl.textContent = "";
     cityEl.textContent = currentCity;
-    currentLocationEl.classList.add('border', 'p-2','is-size-3');
+    currentLocationEl.classList.add('border', 'p-2', 'is-size-3');
 
     enteredLat = (Math.round(weather.coord.lat * 100) / 100).toFixed(2);
     enteredLon = (Math.round(weather.coord.lon * 100) / 100).toFixed(2);
-    console.log(weather);
+    //console.log(weather);
 
 
 
@@ -122,8 +122,8 @@ var getISS = function () {
 var loadISS = function (iss) {
     issTitleEl.textContent = "ISS Location:"
     issDisplayEl.textContent = "";
-    issLocationEl.classList.add('border', 'is-size-3');
-    console.log(iss);
+    issLocationEl.classList.add('border', 'p-2', 'is-size-3');
+    //console.log(iss);
 
     issLat = (Math.round(iss.latitude * 100) / 100).toFixed(2);
     issLon = (Math.round(iss.longitude * 100) / 100).toFixed(2);
@@ -196,26 +196,26 @@ function distance(lat1, lon1, lat2, lon2) {
 }
 
 var calcDistance = function () {
-    console.log(issLat);
-    console.log(issLon);
-    console.log(issAlt);
-    console.log(enteredLat);
-    console.log(enteredLon);
+    //console.log(issLat);
+    //console.log(issLon);
+    //console.log(issAlt);
+    //console.log(enteredLat);
+    //console.log(enteredLon);
 
     var dis = distance(enteredLat, enteredLon, issLat, issLon);
-    console.log(dis);
+    //console.log(dis);
 
    
 
     var longSide = getLongestSide(dis, issAlt);
     //divide by 1.609 to convert to miles
     var longSideAns = Math.round(longSide / 1.609);;
-    console.log(issAlt)
-    console.log("The ISS is approximately " + longSideAns + " miles away")
+    //console.log(issAlt)
+    //console.log("The ISS is approximately " + longSideAns + " miles away")
 
     distTitleEl.textContent = "Distance:"
     distDisplayEl.textContent = "";
-    distLocationEl.classList.add('border', 'is-size-3');
+    distLocationEl.classList.add('border', 'p-2', 'is-size-3');
 
     var visEl = document.createElement('span');
     visEl.textContent = "The ISS is approximately " + longSideAns + " miles away";
