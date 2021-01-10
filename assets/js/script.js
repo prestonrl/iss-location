@@ -23,7 +23,6 @@ var enteredLon = 0;
 var searchedCity = function (event) {
     event.preventDefault();
     var currentCity = cityInputEl.value.trim();
-    //console.log(currentCity);
 
     if (currentCity) {
         getLocation(currentCity);
@@ -52,7 +51,6 @@ var loadPrevious = function () {
 };
 
 var previousSearch = function (pastCity) {
-    //console.log(pastCity);
     pastCityEl = document.createElement("button");
     pastCityEl.textContent = pastCity;
     pastCityEl.classList = "d-flex w-100 btn-light border p-2";
@@ -87,9 +85,6 @@ var loadLocation = function (weather, currentCity) {
 
     enteredLat = (Math.round(weather.coord.lat * 100) / 100).toFixed(2);
     enteredLon = (Math.round(weather.coord.lon * 100) / 100).toFixed(2);
-    //console.log(weather);
-
-
 
     var latEl = document.createElement('span');
     latEl.textContent = "Latitude: " + enteredLat + "°";
@@ -123,7 +118,6 @@ var loadISS = function (iss) {
     issTitleEl.textContent = "ISS Location:"
     issDisplayEl.textContent = "";
     issLocationEl.classList.add('border', 'p-2', 'is-size-3');
-    //console.log(iss);
 
     issLat = (Math.round(iss.latitude * 100) / 100).toFixed(2);
     issLon = (Math.round(iss.longitude * 100) / 100).toFixed(2);
@@ -160,7 +154,7 @@ var loadISS = function (iss) {
 };
 
 function convertLatLong(latitude, longitude) {
-    var apiSite = `http://api.positionstack.com/v1/reverse?access_key=7ea1c67aa559e0d3ca2f78be3f4734f3&query=${latitude},${longitude}`;
+    var apiSite = `https://cors-anywhere.herokuapp.com/http://api.positionstack.com/v1/reverse?access_key=7ea1c67aa559e0d3ca2f78be3f4734f3&query=${latitude},${longitude}`;
     fetch(apiSite)
         .then(function (response) {
             if (response.ok) {
@@ -196,22 +190,13 @@ function distance(lat1, lon1, lat2, lon2) {
 }
 
 var calcDistance = function () {
-    //console.log(issLat);
-    //console.log(issLon);
-    //console.log(issAlt);
-    //console.log(enteredLat);
-    //console.log(enteredLon);
-
+  
     var dis = distance(enteredLat, enteredLon, issLat, issLon);
-    //console.log(dis);
-
    
 
     var longSide = getLongestSide(dis, issAlt);
     //divide by 1.609 to convert to miles
     var longSideAns = Math.round(longSide / 1.609);;
-    //console.log(issAlt)
-    //console.log("The ISS is approximately " + longSideAns + " miles away")
 
     distTitleEl.textContent = "Distance:"
     distDisplayEl.textContent = "";
